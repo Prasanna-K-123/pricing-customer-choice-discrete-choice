@@ -1,0 +1,17 @@
+metric,value
+usable_choice_observations,6768.0
+unique_respondents,752.0
+full_sample_log_likelihood,-5331.252006915831
+official_biogeme_log_likelihood,-5331.252
+absolute_ll_validation_difference,6.91583045409061e-06
+value_of_time_chf_per_hour,70.74393078149483
+willingness_to_pay_10min_chf,11.790655130249137
+holdout_baseline_log_loss,0.8989638117408135
+holdout_mnl_log_loss,0.8793777913566747
+holdout_log_loss_improvement,0.02178732906523917
+holdout_baseline_accuracy,0.5835172921265637
+holdout_mnl_accuracy,0.6585724797645327
+base_sm_share_non_ga,0.582898906742419
+sm_arc_fare_elasticity,-0.4499867218115614
+best_tested_fare_multiplier,1.35
+best_tested_fare_revenue_index,105.85511039421789
