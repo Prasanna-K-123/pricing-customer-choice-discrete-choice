@@ -153,10 +153,16 @@ Therefore it is a sensitivity analysis, not a revenue forecast or profit optimiz
     └── project7_metrics.csv
 ```
 
+## Inference and reproduction provenance — audited 12 October 2026
+
+The committed `results/mnl_parameter_estimates.csv` has five columns (`parameter, estimate, std_error, z_stat, p_value`). The current `src/discrete_choice_pipeline.py::main()` instead writes **only** `parameter, estimate` to that same path and therefore **overwrites the existing standard-error, z-statistic and p-value columns** if executed in the source tree. The notebook has not been independently verified to reconstruct the displayed Hessian-based statistics. Historical numeric inference rows remain preserved in the repository's prior commits; this project's current executable contract does **not** guarantee reproducing those inferential columns. Avoid running the current script directly over the sole committed output snapshot. Use a disposable copy/working directory until a separate tested inferential computation and output-preservation contract exists.
+
+The fitted-parameter and respondent-grouped predictive comparisons are separate from these inference/provenance limitations. The current fitted coefficient and log-likelihood claims must not be presented as a verified inference-table regeneration, and the reported standard errors are **not cluster-robust** for repeated observations from the same respondent. Neither a new Hessian computation nor a new evaluation has been run in this disclosure update.
+
 ## Reproduce
 
 1. Install dependencies from `requirements.txt`.
-2. Run the notebook from top to bottom, or use the core script in `src/`.
+2. Run only in a separate clean/disposable working directory: the core script overwrites a committed inference CSV with an estimates-only schema. The current notebook/script pair does **not** jointly reproduce all historical inference columns. Do not claim a full evidence replay from either entry point.
 3. The data are downloaded from EPFL at runtime.
 4. Verify that the estimated full-sample log likelihood is within **0.05** of the official benchmark before interpreting downstream results.
 
