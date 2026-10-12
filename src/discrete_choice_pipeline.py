@@ -133,7 +133,7 @@ def main():
     pd.DataFrame({
         "parameter": ["ASC_TRAIN", "B_TIME", "B_COST", "ASC_CAR"],
         "estimate": params,
-    }).to_csv(out / "mnl_parameter_estimates.csv", index=False)
+    }).to_csv(out / "mnl_point_estimates_regenerated.csv", index=False)
     pd.DataFrame({
         "model": ["Training-share baseline", "Multinomial logit"],
         "test_log_loss": [base_ll, mnl_ll],
