@@ -1,0 +1,8 @@
+{
+  "src/discrete_choice_pipeline.py": "7bdf1884afcf07b25292ca128513dbb4ec78a08b1cab746ca742d94965ef9f86",
+  "pricing_customer_choice_discrete_choice.ipynb": "5383c720f72d24437d667d3a44cdb0aa0d15b07aa43a3453c9e411c109c4cc6a",
+  "results/respondent_holdout_validation.csv": "12f0c476e5033cd3cf995709a0966095308afd110c7fc41c881c157ca992bc4f",
+  "results/mnl_parameter_estimates.csv": "357922ba2149b74cf6cbe8043d533c21473e417453f11f0ea625203a89b26b36",
+  "results/project7_metrics.csv": "e1c8e6751c209dbe3253f41e2886ac112da3ede361aa2d9775e2e3bd2cc4123e",
+  "results/swissmetro_pricing_scenarios.csv": "25066c774b6cf50ab62f3466cb3dbe9ffbdc027b15fbe8e02a8563e16169f679"
+}
