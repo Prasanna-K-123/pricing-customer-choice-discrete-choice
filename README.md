@@ -130,7 +130,7 @@ Therefore it is a sensitivity analysis, not a revenue forecast or profit optimiz
 - Python
 - Pandas / NumPy
 - SciPy numerical optimization
-- Statsmodels numerical Hessian utilities
+- Analytic NumPy/SciPy likelihood, information and respondent-cluster inference
 - scikit-learn holdout evaluation
 - Matplotlib
 - maximum-likelihood estimation
@@ -153,23 +153,43 @@ Therefore it is a sensitivity analysis, not a revenue forecast or profit optimiz
     └── project7_metrics.csv
 ```
 
-## Inference and reproduction provenance — audited 12 October 2026
+## Inference and reproduction — verified 13 October 2026
 
-The committed `results/mnl_parameter_estimates.csv` has five columns (`parameter, estimate, std_error, z_stat, p_value`). The prior `src/discrete_choice_pipeline.py::main()` wrote **only** `parameter, estimate` over that same path. **Corrected source now writes estimates-only to a separate `results/mnl_point_estimates_regenerated.csv`**, preserving the prior inference table's original bytes and history. The separate estimates-only CSV is a new possible output, **not** a regenerated or verified standard-error table. The notebook has not been independently verified to reconstruct the displayed Hessian-based statistics. Historical numeric inference rows remain preserved in the repository's prior commits; this project's current executable contract does **not** guarantee reproducing those inferential columns. The script no longer overwrites this particular inference file, but its full external-data runtime and numeric outcomes still require an independent clean-run verification. Use a disposable copy/working directory until a separate tested inferential computation and output-preservation contract exists.
+The old five-column `results/mnl_parameter_estimates.csv` and original fitting source remain unchanged. The original CLI generates point estimates in a separate file and does not regenerate those historical inference columns. The new **optional** analytic inference/reproduction route supplies explicit conventional, row-sandwich and respondent-cluster uncertainty; it never writes inside committed `results/`.
 
-The fitted-parameter and respondent-grouped predictive comparisons are separate from these inference/provenance limitations. The current fitted coefficient and log-likelihood claims must not be presented as a verified inference-table regeneration, and the reported standard errors are **not cluster-robust** for repeated observations from the same respondent. Neither a new Hessian computation nor a new evaluation has been run in this disclosure update.
+The method and official source were registered before the new inference run: [protocol](docs/INFERENCE_REPRODUCTION_PROTOCOL.md), [exact input receipt](research_inference/INPUT_SOURCE.json), [complete result](reference/mnl_inference/summary.json). Ten substantive checks include a closed-form grouped covariance example, finite-difference gradient/information, availability, row/group-label permutation, malformed-input refusal and non-mutation. Recorded-data replay of the unchanged core pipeline matched historical point estimates, respondent-holdout metrics and fare scenarios within registered tolerances, with all six historical source/result hashes preserved. It uses the pinned official source bytes in the existing loader; the old HTTP acquisition route is not certified.
+
+Repeated tasks from one respondent do not provide independent evidence. The new covariance sums the likelihood scores within each of the **752 respondents / 6,768 tasks**, then applies the explicitly registered finite-sample factor. This gives much wider uncertainty than the original row-independent table:
+
+| Parameter | Estimate | Conventional SE | Respondent-cluster SE | Cluster normal-reference p |
+|---|---:|---:|---:|---:|
+| ASC_TRAIN | -0.701187 | 0.054874 | 0.183633 | 0.000134 |
+| B_TIME | -1.277860 | 0.056883 | 0.237938 | 0.0000000785 |
+| B_COST | -1.083791 | 0.051830 | 0.161312 | 0.0000000000183 |
+| ASC_CAR | -0.154632 | 0.043235 | 0.129023 | 0.230726 |
+
+The Car constant is no longer significant at a conventional 5% threshold in the respondent-cluster diagnostic; this adverse result is retained. The official Biogeme example's reported robust SE are **row-sandwich**, not this respondent-cluster calculation. New row-sandwich SE independently match that official table to its displayed precision. Clustering assumes respondents are independent and does not fix model specification, IIA, sampling bias or stated-versus-real behavior. The normal-reference p-values are asymptotic diagnostics, not guaranteed finite-sample coverage, causal fare effects or a commercial pricing recommendation.
+
+The analytic optimizer reports a trust-region precision termination flag (`optimizer_success=false`), which is preserved. Its gradient infinity norm **2.10e-8** meets the **preregistered <=1e-6** stationarity criterion, the information is full-rank, and log likelihood matches the fixed official benchmark. No success flag or tolerance was changed after observing outcomes to conceal this diagnostic.
 
 ## Reproduce
 
-1. Install dependencies from `requirements.txt`.
-2. Prefer a disposable working directory for numerical reproduction. The current core script preserves the committed inference table by writing regenerated **point estimates only** to `results/mnl_point_estimates_regenerated.csv`; the notebook/script pair still does **not** jointly reproduce the historical standard-error, z-statistic and p-value columns. Do not claim a full inferential evidence replay from either entry point.
-3. The data are downloaded from EPFL at runtime.
-4. Verify that the estimated full-sample log likelihood is within **0.05** of the official benchmark before interpreting downstream results.
+For the verified inference and recorded-input replay, use a fresh environment and a **new nonexistent output directory**:
+
+```bash
+python -m pip install -r requirements-inference.txt
+python -m unittest discover -s tests -v
+python research_inference/run.py --output /tmp/swissmetro-inference
+```
+
+The runner fetches the immutable official repository input, verifies its SHA256, constructs the registered sample, produces `parameter_inference.csv` and `summary.json`, and refuses to overwrite an existing output directory or anything inside committed `results/`. Historical point/holdout/scenario replay runs in a temporary directory. The same dedicated [CI workflow](.github/workflows/inference.yml) executes this route. Full result replay uses the registered1e-8 float tolerance; integer identities, source/protocol/schema and historical file hashes are exact.
+
+The original notebook, unpinned `requirements.txt` and `src/discrete_choice_pipeline.py` remain historical entry points. Use a disposable directory for them; they do not themselves implement the new clustered inference route or guarantee reproducing its results.
 
 ## Limitations
 
 - Swissmetro is a **stated-preference** experiment involving a hypothetical transport mode.
-- Multiple observations come from each respondent; the holdout correctly splits by respondent ID, but the conventional Hessian standard errors shown in the notebook do not adjust for within-respondent clustering.
+- Multiple observations come from each respondent; the holdout correctly splits by respondent ID, but the original conventional inference CSV does not adjust for within-respondent clustering. The separate registered route now reports clustered uncertainty with its own assumptions.
 - Standard multinomial logit assumes **independence of irrelevant alternatives (IIA)** and homogeneous generic time/cost coefficients.
 - Value of time is model-implied within this survey context.
 - Pricing scenarios are not commercial forecasts.
@@ -186,3 +206,4 @@ The fitted-parameter and respondent-grouped predictive comparisons are separate 
 - price elasticity;
 - pricing-scenario analysis;
 - careful separation of model output from commercial claims.
+
