@@ -1,7 +1,10 @@
 import unittest
+import tempfile
+from pathlib import Path
 import numpy as np
 
 from src.mnl_inference import validate, likelihood_parts, fit, covariance
+from research_inference.run import compare_reference, acquire_input, run, ROOT
 
 
 class InferenceChecks(unittest.TestCase):
@@ -79,7 +82,8 @@ class InferenceChecks(unittest.TestCase):
 
     def test_finite_shape_and_group_refusals(self):
         cases = [(np.full_like(self.x, np.nan), self.group), (self.x.reshape(8, 2), self.group),
-                 (self.x, self.group[:-1]), (self.x, np.full(8, np.nan)), (self.x, np.full(8, None))]
+                 (self.x, self.group[:-1]), (self.x, np.full(8, np.nan)),
+                 (self.x, np.full(8, np.nan, dtype=object)), (self.x, np.full(8, None))]
         for x, group in cases:
             with self.subTest(shape=x.shape):
                 with self.assertRaises(ValueError): validate(x, self.av, self.choice, group)
@@ -100,6 +104,27 @@ class InferenceChecks(unittest.TestCase):
         self.assertTrue(np.isfinite(p).all())
         with self.assertRaises(ValueError): likelihood_parts(np.array([np.nan]), self.data)
         with self.assertRaises(ValueError): likelihood_parts(np.array([1,2]), self.data)
+
+    def test_reference_comparator_rejects_type_count_and_schema_changes(self):
+        expected = {'count':8,'flag':True,'value':1.0,'names':['a','b']}
+        compare_reference({'count':8,'flag':True,'value':1.0+1e-10,'names':['a','b']},expected)
+        for change in [{'count':9},{'count':8.0},{'flag':1},{'value':float('nan')},
+                       {'value':1.0001},{'names':['a']},{'names':['a','c']}]:
+            with self.subTest(change=change):
+                with self.assertRaises(ValueError): compare_reference({**expected,**change},expected)
+        with self.assertRaises(ValueError):compare_reference({**expected,'extra':0},expected)
+
+    def test_registered_data_hash_refuses_corrupt_input_before_fitting(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'data.dat';path.write_bytes(b'bad')
+            receipt={'raw_bytes':3,'raw_sha256':'0'*64}
+            with self.assertRaisesRegex(ValueError,'input bytes'):acquire_input(path,receipt)
+
+    def test_output_guard_refuses_existing_and_historical_paths_before_network(self):
+        with self.assertRaisesRegex(ValueError,'separate'):run(None,ROOT/'results')
+        with self.assertRaisesRegex(ValueError,'separate'):run(None,ROOT/'results'/'child')
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(FileExistsError,'overwrite'):run(None,folder)
 
 
 if __name__ == '__main__':
