@@ -1,0 +1,25 @@
+{
+  "source_url": "https://raw.githubusercontent.com/michelbierlaire/biogeme/8d1063b5c371f09f5dd44f430b3be66455f2b785/src/biogeme/data/data/swissmetro.dat",
+  "source_repo": "michelbierlaire/biogeme",
+  "source_commit": "8d1063b5c371f09f5dd44f430b3be66455f2b785",
+  "source_git_blob": "1ba01b125baa37c172b7dedbf74f46a5558bd356",
+  "raw_sha256": "27432693cf052985d79a950b4b888be3efca798fc89b0d3ffefe40608ede00f2",
+  "raw_bytes": 767932,
+  "raw_rows": 10728,
+  "sample_rule": "PURPOSE in [1,3] and CHOICE != 0",
+  "usable_rows": 6768,
+  "respondents": 752,
+  "historical_source_commit": "70f753b36b84fab03924cb5683488c95004bf75b",
+  "historical_inference_blob": "fc5d4a550a46058903afb0f17e41efec64a11575",
+  "registration_commit": "39324191bf3015247c683e6b1432dbf8ec746a13",
+  "python_ci": "3.12",
+  "dependencies": [
+    "numpy==2.3.5",
+    "pandas==2.2.3",
+    "scipy==1.17.0",
+    "scikit-learn==1.8.0",
+    "requests==2.32.4"
+  ],
+  "official_benchmark": -5331.252,
+  "observed_data_before_fitting": true
+}
