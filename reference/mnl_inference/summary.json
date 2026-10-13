@@ -1,0 +1,274 @@
+{
+  "source": {
+    "source_url": "https://raw.githubusercontent.com/michelbierlaire/biogeme/8d1063b5c371f09f5dd44f430b3be66455f2b785/src/biogeme/data/data/swissmetro.dat",
+    "source_repo": "michelbierlaire/biogeme",
+    "source_commit": "8d1063b5c371f09f5dd44f430b3be66455f2b785",
+    "source_git_blob": "1ba01b125baa37c172b7dedbf74f46a5558bd356",
+    "raw_sha256": "27432693cf052985d79a950b4b888be3efca798fc89b0d3ffefe40608ede00f2",
+    "raw_bytes": 767932,
+    "raw_rows": 10728,
+    "sample_rule": "PURPOSE in [1,3] and CHOICE != 0",
+    "usable_rows": 6768,
+    "respondents": 752,
+    "historical_source_commit": "70f753b36b84fab03924cb5683488c95004bf75b",
+    "historical_inference_blob": "fc5d4a550a46058903afb0f17e41efec64a11575",
+    "registration_commit": "39324191bf3015247c683e6b1432dbf8ec746a13",
+    "python_ci": "3.12",
+    "dependencies": [
+      "numpy==2.3.5",
+      "pandas==2.2.3",
+      "scipy==1.17.0",
+      "scikit-learn==1.8.0",
+      "requests==2.32.4"
+    ],
+    "official_benchmark": -5331.252,
+    "observed_data_before_fitting": true
+  },
+  "optimizer": {
+    "optimizer_success": false,
+    "optimizer_message": "A bad approximation caused failure to predict improvement.",
+    "gradient_infinity_norm": 2.0995894245423585e-8,
+    "iterations": 5
+  },
+  "inference": {
+    "log_likelihood": -5331.25200691583,
+    "information": [
+      [
+        761.3929251201972,
+        452.91230870670375,
+        -59.47899056551651,
+        -197.06832299683515
+      ],
+      [
+        452.91230870670375,
+        825.7763412097039,
+        -235.86928668488807,
+        362.682217869621
+      ],
+      [
+        -59.47899056551651,
+        -235.86928668488804,
+        467.4183354241411,
+        -258.81644344628427
+      ],
+      [
+        -197.06832299683518,
+        362.682217869621,
+        -258.81644344628427,
+        1026.186421340002
+      ]
+    ],
+    "information_eigenvalues": [
+      159.08300265464445,
+      340.55056097272904,
+      1111.5969148715797,
+      1469.5435445950914
+    ],
+    "conventional": [
+      [
+        0.0030111485413955416,
+        -0.0022539224713496635,
+        0.000008217479406142535,
+        0.00137692955546163
+      ],
+      [
+        -0.002253922471349664,
+        0.0032357149688723944,
+        0.0005499012609601561,
+        -0.001437740242521844
+      ],
+      [
+        0.000008217479406142723,
+        0.0005499012609601559,
+        0.0026863687704919603,
+        0.00048476221919387043
+      ],
+      [
+        0.0013769295554616303,
+        -0.001437740242521844,
+        0.0004847622191938705,
+        0.0018693060167779673
+      ]
+    ],
+    "row_sandwich": [
+      [
+        0.006816489808763166,
+        -0.007602326343029529,
+        -0.0008305691349639675,
+        0.0039013228279421303
+      ],
+      [
+        -0.00760232634302953,
+        0.010868997380056287,
+        0.0021980091376829795,
+        -0.004824228818083791
+      ],
+      [
+        -0.0008305691349639666,
+        0.002198009137682978,
+        0.004654658498204367,
+        0.00002863924468536387
+      ],
+      [
+        0.0039013228279421303,
+        -0.0048242288180837915,
+        0.000028639244685363742,
+        0.003382984381542507
+      ]
+    ],
+    "cluster_uncorrected": [
+      [
+        0.03366122572781208,
+        -0.0383695083656197,
+        -0.004354112535823671,
+        0.019663137209779354
+      ],
+      [
+        -0.03836950836561971,
+        0.05651419248940467,
+        0.012795993838267959,
+        -0.02543711548539138
+      ],
+      [
+        -0.004354112535823669,
+        0.01279599383826795,
+        0.02597547956776752,
+        -0.00028468022192594837
+      ],
+      [
+        0.019663137209779358,
+        -0.02543711548539138,
+        -0.0002846802219259493,
+        0.01661735733760534
+      ]
+    ],
+    "cluster_corrected": [
+      [
+        0.03372099705893393,
+        -0.0384376400673007,
+        -0.004361844016080064,
+        0.019698052512465113
+      ],
+      [
+        -0.038437640067300716,
+        0.05661454321755945,
+        0.01281871533958597,
+        -0.025482283485652464
+      ],
+      [
+        -0.004361844016080061,
+        0.012818715339585961,
+        0.02602160352661704,
+        -0.00028518572092191985
+      ],
+      [
+        0.019698052512465116,
+        -0.025482283485652464,
+        -0.00028518572092192077,
+        0.016646864331076927
+      ]
+    ],
+    "finite_sample_factor": 1.0017756730430785,
+    "rows": 6768,
+    "clusters": 752
+  },
+  "parameter_table": [
+    {
+      "parameter": "ASC_TRAIN",
+      "estimate": -0.7011867124945436,
+      "conventional_se": 0.05487393316863246,
+      "conventional_z": -12.778138398421973,
+      "conventional_normal_p": 2.1720631756194204e-37,
+      "row_sandwich_se": 0.08256203612292497,
+      "row_sandwich_z": -8.492846657155605,
+      "row_sandwich_normal_p": 2.0163626697362983e-17,
+      "cluster_uncorrected_se": 0.18346995865212395,
+      "cluster_uncorrected_z": -3.8218066742144883,
+      "cluster_uncorrected_normal_p": 0.0001324775315527463,
+      "cluster_corrected_se": 0.18363277773571343,
+      "cluster_corrected_z": -3.818418046824408,
+      "cluster_corrected_normal_p": 0.00013431018730621305
+    },
+    {
+      "parameter": "B_TIME",
+      "estimate": -1.2778602548517546,
+      "conventional_se": 0.05688334526794635,
+      "conventional_z": -22.46457638580244,
+      "conventional_normal_p": 9.218676297968528e-112,
+      "row_sandwich_se": 0.10425448374077868,
+      "row_sandwich_z": -12.25712515184539,
+      "row_sandwich_normal_p": 1.5386217441121907e-34,
+      "cluster_uncorrected_se": 0.23772713873137133,
+      "cluster_uncorrected_z": -5.375323413519567,
+      "cluster_uncorrected_normal_p": 7.644534077826368e-8,
+      "cluster_corrected_se": 0.23793810795574435,
+      "cluster_corrected_z": -5.370557351365642,
+      "cluster_corrected_normal_p": 7.849366462911943e-8
+    },
+    {
+      "parameter": "B_COST",
+      "estimate": -1.083790651451379,
+      "conventional_se": 0.05183019168874412,
+      "conventional_z": -20.910411791641977,
+      "conventional_normal_p": 4.305015329048666e-97,
+      "row_sandwich_se": 0.06822505770026412,
+      "row_sandwich_z": -15.885521947271046,
+      "row_sandwich_normal_p": 7.983068115688827e-57,
+      "cluster_uncorrected_se": 0.16116910239797055,
+      "cluster_uncorrected_z": -6.724555980805824,
+      "cluster_uncorrected_normal_p": 1.7612869658199688e-11,
+      "cluster_corrected_se": 0.16131213074848724,
+      "cluster_corrected_z": -6.718593613651977,
+      "cluster_corrected_normal_p": 1.834868478538336e-11
+    },
+    {
+      "parameter": "ASC_CAR",
+      "estimate": -0.15463242247404196,
+      "conventional_se": 0.043235471742285495,
+      "conventional_z": -3.5765175269917813,
+      "conventional_normal_p": 0.0003482019805734966,
+      "row_sandwich_se": 0.058163428213461654,
+      "row_sandwich_z": -2.658585080414036,
+      "row_sandwich_normal_p": 0.00784695350739101,
+      "cluster_uncorrected_se": 0.1289083292018221,
+      "cluster_uncorrected_z": -1.1995533836447883,
+      "cluster_uncorrected_normal_p": 0.2303128402624297,
+      "cluster_corrected_se": 0.12902272796324268,
+      "cluster_corrected_z": -1.198489792574338,
+      "cluster_corrected_normal_p": 0.2307263944480784
+    }
+  ],
+  "legacy_replay": {
+    "scope": "unchanged core computational replay from registered source bytes; historical HTTP acquisition not tested",
+    "historical_inference_columns_regenerated": false,
+    "csv_comparisons": {
+      "respondent_holdout_validation.csv": {
+        "schema_equal": true,
+        "numeric_tolerance_pass": true,
+        "maximum_absolute_delta": 0
+      },
+      "swissmetro_pricing_scenarios.csv": {
+        "schema_equal": true,
+        "numeric_tolerance_pass": true,
+        "maximum_absolute_delta": 2.842170943040401e-14
+      },
+      "project7_metrics.csv": {
+        "schema_equal": true,
+        "numeric_tolerance_pass": true,
+        "maximum_absolute_delta": 0
+      }
+    },
+    "point_estimates_match": true,
+    "stdout": "Usable observations: 6,768 | Respondents: 752\nLog likelihood: -5331.252007 | benchmark difference: 0.000007\nValue of time: 70.74 CHF/hour | WTP 10 min: 11.79 CHF\nHoldout accuracy: 65.86% vs 58.35% baseline\nHoldout log-loss improvement: 2.18%\nOwn-fare elasticity: -0.450\nBest tested fare-revenue proxy: 1.35x, index 105.86\n"
+  },
+  "historical_sha256": {
+    "src/discrete_choice_pipeline.py": "7bdf1884afcf07b25292ca128513dbb4ec78a08b1cab746ca742d94965ef9f86",
+    "pricing_customer_choice_discrete_choice.ipynb": "5383c720f72d24437d667d3a44cdb0aa0d15b07aa43a3453c9e411c109c4cc6a",
+    "results/respondent_holdout_validation.csv": "12f0c476e5033cd3cf995709a0966095308afd110c7fc41c881c157ca992bc4f",
+    "results/mnl_parameter_estimates.csv": "357922ba2149b74cf6cbe8043d533c21473e417453f11f0ea625203a89b26b36",
+    "results/project7_metrics.csv": "e1c8e6751c209dbe3253f41e2886ac112da3ede361aa2d9775e2e3bd2cc4123e",
+    "results/swissmetro_pricing_scenarios.csv": "25066c774b6cf50ab62f3466cb3dbe9ffbdc027b15fbe8e02a8563e16169f679"
+  },
+  "historical_bytes_preserved": true,
+  "scope": "same known stated-preference sample and fixed MNL specification; asymptotic respondent-cluster inference, not new holdout, causal fare effect, population coverage or real-market validation"
+}
