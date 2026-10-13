@@ -51,7 +51,8 @@ def validate(x, availability, choice, group):
         raise ValueError("each row must have an available chosen alternative")
     if group.dtype.kind in "fc" and not np.isfinite(group).all():
         raise ValueError("respondent identifiers must not be missing or nonfinite")
-    if any(v is None or (isinstance(v, str) and not v) for v in group):
+    if any(v is None or (isinstance(v, str) and not v) or
+           (isinstance(v, (float, np.floating)) and not np.isfinite(v)) for v in group):
         raise ValueError("respondent identifiers must not be missing")
     try:
         np.unique(group)
