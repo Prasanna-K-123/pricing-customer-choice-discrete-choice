@@ -131,6 +131,7 @@ def run(data_path, output):
     output.mkdir(parents=True, exist_ok=False)
     pd.DataFrame(rows).to_csv(output/'parameter_inference.csv', index=False)
     (output/'summary.json').write_text(json.dumps(proof, indent=2, allow_nan=False)+'\n')
+    print('INFERENCE_RESULT_JSON=' + json.dumps(proof, allow_nan=False, separators=(',', ':')))
     print(json.dumps({'rows': estimates['rows'], 'respondents': estimates['clusters'],
                       'log_likelihood': estimates['log_likelihood'], 'gradient_infinity_norm': optimizer['gradient_infinity_norm'],
                       'historical_bytes_preserved': True, 'legacy_point_and_metric_replay': True,
