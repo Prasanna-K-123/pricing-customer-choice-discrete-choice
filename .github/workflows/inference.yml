@@ -1,0 +1,24 @@
+name: Registered choice inference and replay
+on:
+  push:
+    branches: [main, fix/reproducible-choice-inference-20261013]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-inference.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python research_inference/run.py --output /tmp/registered-choice-inference
+      - uses: actions/upload-artifact@v4
+        with:
+          name: registered-choice-inference
+          path: /tmp/registered-choice-inference
+          if-no-files-found: error
