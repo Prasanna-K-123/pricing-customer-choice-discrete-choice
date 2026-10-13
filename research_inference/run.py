@@ -147,7 +147,18 @@ def run(data_path, output):
              'scope': 'same known stated-preference sample and fixed MNL specification; asymptotic respondent-cluster inference, not new holdout, causal fare effect, population coverage or real-market validation'}
     frozen = ROOT/'reference/mnl_inference/summary.json'
     if frozen.exists():
-        compare_reference(proof, json.loads(frozen.read_text()))
+        reference = json.loads(frozen.read_text())
+        # The registered1e-8 replay is for new inference. Legacy numeric CSVs
+        # are independently checked against their original1e-6 tolerances above.
+        # Legacy maximum deltas and formatted stdout are diagnostics, not frozen
+        # outputs of the new analytic inference implementation.
+        compare_reference({k:v for k,v in proof.items() if k!='legacy_replay'},
+                          {k:v for k,v in reference.items() if k!='legacy_replay'})
+        compare_reference({k:v for k,v in proof['legacy_replay'].items() if k not in ['stdout','csv_comparisons']},
+                          {k:v for k,v in reference['legacy_replay'].items() if k not in ['stdout','csv_comparisons']})
+        if set(proof['legacy_replay']['csv_comparisons']) != set(reference['legacy_replay']['csv_comparisons']):
+            raise ValueError('legacy replay comparison schema differs')
+
     output.mkdir(parents=True, exist_ok=False)
     pd.DataFrame(rows).to_csv(output/'parameter_inference.csv', index=False)
     (output/'summary.json').write_text(json.dumps(proof, indent=2, allow_nan=False)+'\n')
