@@ -102,6 +102,23 @@ def serializable(value):
     return value
 
 
+def compare_reference(value, reference, path='result'):
+    """Require exact schema/types/identities; tolerate finite float roundoff only."""
+    if type(value) is not type(reference):
+        raise ValueError(f'reference type mismatch: {path}')
+    if isinstance(value, dict):
+        if set(value) != set(reference): raise ValueError(f'reference keys differ: {path}')
+        for key in value: compare_reference(value[key], reference[key], path+'/'+key)
+    elif isinstance(value, list):
+        if len(value) != len(reference): raise ValueError(f'reference list length differs: {path}')
+        for index, (a,b) in enumerate(zip(value,reference)): compare_reference(a,b,path+'/'+str(index))
+    elif isinstance(value, float):
+        if not np.isfinite(value) or not np.isfinite(reference) or not np.isclose(value,reference,rtol=1e-8,atol=1e-8):
+            raise ValueError(f'reference floating diagnostic differs: {path}')
+    elif value != reference:
+        raise ValueError(f'reference identity differs: {path}')
+
+
 def run(data_path, output):
     receipt = json.loads((ROOT/'research_inference/INPUT_SOURCE.json').read_text())
     expected = json.loads((ROOT/'research_inference/HISTORICAL_SHA256.json').read_text())
@@ -128,6 +145,9 @@ def run(data_path, output):
              'parameter_table': rows, 'legacy_replay': replay,
              'historical_sha256': after, 'historical_bytes_preserved': True,
              'scope': 'same known stated-preference sample and fixed MNL specification; asymptotic respondent-cluster inference, not new holdout, causal fare effect, population coverage or real-market validation'}
+    frozen = ROOT/'reference/mnl_inference/summary.json'
+    if frozen.exists():
+        compare_reference(proof, json.loads(frozen.read_text()))
     output.mkdir(parents=True, exist_ok=False)
     pd.DataFrame(rows).to_csv(output/'parameter_inference.csv', index=False)
     (output/'summary.json').write_text(json.dumps(proof, indent=2, allow_nan=False)+'\n')
